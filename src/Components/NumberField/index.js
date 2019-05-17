@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import NumberFormat from 'react-number-format'
 
 
-const SelectField = ({name, value, error, type, onChange, placeholder, prefix, mask, thousandSeparator, decimalSeparator, fixedDecimalScale, decimalScale, format}) => (
+const SelectField = ({name, value, error, type, onChange, placeholder, prefix, mask, thousandSeparator, decimalSeparator, fixedDecimalScale, decimalScale, format, allowNegative}) => (
   <div className="form-group">
     <NumberFormat
       className={`form-control ${error ? 'is-invalid' : ''}`}
@@ -19,10 +19,10 @@ const SelectField = ({name, value, error, type, onChange, placeholder, prefix, m
       
       thousandSeparator={thousandSeparator}
       
-      decimalSeparator={decimalSeparator || false}
+      decimalSeparator={decimalSeparator || ','}
       fixedDecimalScale={fixedDecimalScale || false}
       decimalScale={decimalScale}
-
+      allowNegative={allowNegative || true}
       format={format}
     />
     
@@ -35,6 +35,13 @@ SelectField.propTypes = {
   value: PropTypes.string,
   error: PropTypes.instanceOf(Array),
   placeholder: PropTypes.string,
+  thousandSeparator: PropTypes.string,
+  decimalSeparator: PropTypes.string,
+  decimalScale: PropTypes.number,
+  fixedDecimalScale: PropTypes.bool,
+  format: PropTypes.string,
+
+  allowNegative: PropTypes.bool,
   onChange: PropTypes.func
 }
 

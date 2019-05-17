@@ -20,6 +20,13 @@ class App extends Component {
         gender: '',
         income: '',
         uf: '',
+
+        email: '',
+        marital_status: '',
+        id_number: '',
+        id_issuer: '',
+        zip_code: '',
+        mobile_number: ''
       },
       formErrors: {}
     }
@@ -51,7 +58,8 @@ class App extends Component {
     event.preventDefault();
     const {isValid, errors} = allFieldsValidation(this.state.formFields);
     if (!isValid) {
-      this.setState({formErrors: errors});
+      this.setState({formErrors: errors})
+      console.log({formErrors: errors})
     } else {
       alert('No error, form can now submit....')
       this.setState({formErrors: {}})
@@ -60,7 +68,7 @@ class App extends Component {
 
   render(){
     const {formFields, formErrors} = this.state;
-    const {name, cpf, birth_date, income_source, income, gender, uf} = formFields;
+    const {name, cpf, birth_date, income_source, income, gender, uf, mobile_number  } = formFields;
 
     return(
       <div className="vertical-center">
@@ -73,7 +81,6 @@ class App extends Component {
                   onChange={this.onChange}
                   value={name}
                   name="name"
-                  title="Qual é o seu nome completo?"
                   placeholder="Digite seu nome completo"
                 />
 
@@ -82,7 +89,6 @@ class App extends Component {
                   onChange={this.onChange}
                   value={cpf}
                   name="cpf"
-                  title="Qual é o seu CPF?"
                   placeholder="Digite o número do seu cpf"
                   format="###.###.###-##"
                 />
@@ -92,13 +98,10 @@ class App extends Component {
                   onChange={this.onChange}
                   value={birth_date}
                   name="birth_date"
-                  title="Qual é a sua data de nascimento?"
                   placeholder="Digite a sua data de nascimento"
                   format="##/##/####"
+                  mask={['D','D','M','M','A','A','A','A']}
                 />
-                
-
-                { this.state.formFields.birth_date }
 
                 <SelectField
                   error={formErrors['income_source']}
@@ -106,7 +109,6 @@ class App extends Component {
                   value={income_source}
                   name="income_source"
                   placeholder="YYYY-MM-DD"
-                  title="Qual é a sua fonte de renda?"
                 >
                   <option disabled value='' >Selecione sua fonte de renda</option>
     
@@ -118,21 +120,23 @@ class App extends Component {
                   <option value='4'>Empresário</option>
                 </SelectField>
 
-                <TextField
+                <NumberField
                   error={formErrors['income']}
                   onChange={this.onChange}
                   value={income}
                   name="income"
-                  title="Qual é a sua renda mensal?"
-                  placeholder="2000,00"
+                  placeholder="Digite quanto você ganha por mês"
+                  thousandSeparator='.'
+                  fixedDecimalScale
+                  decimalScale={2}
+                  prefix='R$ '
                 />
 
                 <SelectField
                   error={formErrors['gender']}
                   onChange={this.onChange}
                   value={gender}
-                  name='gender'
-                  
+                  name='gender's
                   >
                   <option disabled value='' >Selecione o seu gênero</option>
                   <option value={1}>Masculino</option>
@@ -144,7 +148,6 @@ class App extends Component {
                   onChange={this.onChange}
                   value={uf}
                   name='uf'
-                  title="Qual é o estado onde você reside?"
                   >
                   <option disabled value='' >Selecione o estado onde você reside</option>
                   <option value='AC'>Acre</option>
@@ -175,6 +178,18 @@ class App extends Component {
                   <option value='SE'>Sergipe</option>
                   <option value='TO'>Tocantins</option>
                 </SelectField>
+
+
+                <NumberField
+                  error={formErrors['mobile_number']}
+                  onChange={this.onChange}
+                  value={mobile_number}
+                  name="mobile_number"
+                  placeholder="Digite o número do seu celular"
+                  format="(##) #####-####"
+                />
+
+                {this.state.formFields.mobile_number}
 
                 <button className="btn btn-primary" type="submit">Submit form</button>
               </form>
